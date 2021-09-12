@@ -6,9 +6,9 @@ type State = {
 };
 const SliderContext = React.createContext<
   // eslint-disable-next-line prettier/prettier
-  {open:(status: State['open']) => void} | undefined
+  {open: (status: State['open']) => void} | undefined
 >(undefined);
-let showServerErrorNotification: () => void;
+let openNotification: (status: State['open']) => void;
 
 class SliderProvider extends React.Component<{}, State> {
   constructor(props: {}) {
@@ -17,7 +17,7 @@ class SliderProvider extends React.Component<{}, State> {
       open: undefined,
     };
     // Hack to access this function outside react components
-    showServerErrorNotification = this.showServerError;
+    openNotification = this.open;
   }
 
   showServerError = () => {
@@ -25,6 +25,11 @@ class SliderProvider extends React.Component<{}, State> {
   };
 
   open = (status: State['open']) => {
+    const {open} = this.state;
+
+    if (open === status) {
+      return;
+    }
     this.setState({open: status});
   };
   render() {
@@ -50,4 +55,4 @@ class SliderProvider extends React.Component<{}, State> {
   }
 }
 
-export {SliderProvider, showServerErrorNotification};
+export {SliderProvider, openNotification};

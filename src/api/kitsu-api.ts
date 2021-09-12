@@ -1,5 +1,5 @@
 import {createHttpClient} from '../helpers/http-helpers';
-import {showServerErrorNotification} from '../providers/SliderProvider';
+import {openNotification} from '../providers/SliderProvider';
 const api = createHttpClient({
   config: {
     baseURL: 'https://kitsu.io/api/edge',
@@ -9,8 +9,8 @@ const api = createHttpClient({
     },
   },
   onResponseIntercepted: status => {
-    showServerErrorNotification();
     if (status >= 500) {
+      openNotification('server-error');
       return;
     }
   },
