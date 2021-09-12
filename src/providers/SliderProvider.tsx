@@ -16,6 +16,7 @@ class SliderProvider extends React.Component<{}, State> {
     this.state = {
       open: undefined,
     };
+
     // Hack to access this function outside react components
     openNotification = this.open;
   }

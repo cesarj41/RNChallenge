@@ -22,18 +22,3 @@ export const searchAnimeAsync = async (criteria: string): Promise<Anime[]> => {
 
   return res.data.data;
 };
-
-// Since we are not persisting favorites in api then doind it locally
-const animes = new Set<Anime>([]);
-
-export const addAnimeToFavorites = (anime: Anime) => {
-  animes.add(anime);
-};
-
-export const removeAnimeFromFavorites = (id: string) => {
-  animes.forEach(anime => {
-    if (anime.id === id) {
-      animes.delete(anime);
-    }
-  });
-};

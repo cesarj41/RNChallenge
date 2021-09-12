@@ -4,16 +4,17 @@ import QueryProvider from './providers/QueryProvider';
 import {SliderProvider} from './providers/SliderProvider';
 import {ScreenContainer} from './screens';
 import ErrorBoundary from './components/ErrorBoundary';
-import {getAnimeListAsync} from './services/anime-service';
+import {FavoriteAnimeProvider} from './providers/FavoriteAnimeProvider';
 
 const App = () => {
-  getAnimeListAsync();
   return (
     <ErrorBoundary>
       <NativeBaseProvider>
         <QueryProvider>
           <SliderProvider>
-            <ScreenContainer />
+            <FavoriteAnimeProvider>
+              <ScreenContainer />
+            </FavoriteAnimeProvider>
           </SliderProvider>
         </QueryProvider>
       </NativeBaseProvider>
