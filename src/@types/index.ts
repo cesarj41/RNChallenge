@@ -1,3 +1,7 @@
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {Routes} from '../screens/Container';
+import {RouteProp} from '@react-navigation/native';
+
 export interface Anime {
   id: string;
   type: string;
@@ -91,3 +95,8 @@ export interface RelationshipLinks {
   self: string;
   related: string;
 }
+
+export type Screens<key extends keyof Routes> = {
+  navigation: NativeStackNavigationProp<Routes, key>;
+  route: RouteProp<Routes, key>;
+};
