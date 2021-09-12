@@ -6,7 +6,7 @@ type State = {
 };
 const SliderContext = React.createContext<
   // eslint-disable-next-line prettier/prettier
-  {open: (status: State['open']) => void} | undefined
+  {open:(status: State['open']) => void} | undefined
 >(undefined);
 let showServerErrorNotification: () => void;
 
