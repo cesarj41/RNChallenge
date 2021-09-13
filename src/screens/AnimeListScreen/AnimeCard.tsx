@@ -2,28 +2,26 @@ import React from 'react';
 import {Row, View, Image, Text, Heading, Pressable, Button} from 'native-base';
 import {Anime} from '../../@types';
 
-type Props = Pick<
-  Anime['attributes'],
-  'canonicalTitle' | 'averageRating' | 'posterImage'
-> & {
-  id: string;
-  onPress: (id: string) => void;
-  onAddFavorite: (id: string) => void;
+type Props = {
+  anime: Anime;
+  isFavorite?: boolean;
+  onPress: (anime: Anime) => void;
+  onAddFavorite: (anime: Anime) => void;
+  onRemoveFavorite: (id: string) => void;
 };
 const AnimeCard = ({
-  id,
-  posterImage,
-  canonicalTitle,
-  averageRating,
+  anime,
   onPress,
+  isFavorite,
   onAddFavorite,
+  onRemoveFavorite,
 }: Props) => (
   <Row>
-    <Pressable onPress={() => onPress(id)}>
+    <Pressable onPress={() => onPress(anime)}>
       <Image
         borderRadius={15}
         source={{
-          uri: posterImage.small,
+          uri: anime.attributes.posterImage.small,
         }}
         alt="Alternate Text"
         size="lg"
@@ -38,19 +36,34 @@ const AnimeCard = ({
         justifyContent="space-between">
         <View>
           <Heading size="sm" mb={4} maxW={150} numberOfLines={1}>
-            {canonicalTitle}
+            {anime.attributes.canonicalTitle}
           </Heading>
-          <Text>{averageRating}</Text>
+          <Text>{anime.attributes.averageRating}</Text>
         </View>
         <View justifyContent="center">
-          <Button size="xs" onPress={() => onAddFavorite(id)}>
-            <Text color="white" fontSize="xs">
-              Agregar
-            </Text>
-            <Text color="white" fontSize="xs">
-              Favoritos
-            </Text>
-          </Button>
+          {!isFavorite && (
+            <Button size="xs" onPress={() => onAddFavorite(anime)}>
+              <Text color="white" fontSize="xs">
+                Agregar
+              </Text>
+              <Text color="white" fontSize="xs">
+                Favoritos
+              </Text>
+            </Button>
+          )}
+          {isFavorite && (
+            <Button
+              colorScheme="dark"
+              size="xs"
+              onPress={() => onRemoveFavorite(anime.id)}>
+              <Text color="white" fontSize="xs">
+                Quitar
+              </Text>
+              <Text color="white" fontSize="xs">
+                Favoritos
+              </Text>
+            </Button>
+          )}
         </View>
       </Row>
     </View>

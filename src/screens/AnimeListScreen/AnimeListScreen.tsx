@@ -1,5 +1,5 @@
 import React from 'react';
-import {Input, View, Button} from 'native-base';
+import {Input, View, Button, Spinner} from 'native-base';
 import {
   getAnimeListAsync,
   searchAnimeAsync,
@@ -8,8 +8,14 @@ import PaginatedFlatList from '../../components/PaginatedFlatList';
 import AnimeCard from './AnimeCard';
 import AnimeSearchList from './AnimeList';
 import {Anime} from '../../@types';
+import {
+  useFavoriteAnimeActions,
+  useFavoriteAnime,
+} from '../../providers/FavoriteAnimeProvider';
 
 const AnimeListScreen = () => {
+  const favorite = useFavoriteAnime();
+  const {add, remove} = useFavoriteAnimeActions();
   const [searchStatus, setStatus] = React.useState<
     'clear' | 'searching' | 'search-completed'
   >();
@@ -53,6 +59,15 @@ const AnimeListScreen = () => {
             Search
           </Button>
         }
+        InputRightElement={
+          searchStatus === 'searching' ? (
+            <Spinner
+              size="sm"
+              color="gray.900"
+              accessibilityLabel="Searching animes"
+            />
+          ) : undefined
+        }
       />
       <View display={searchStatus === 'search-completed' ? 'none' : undefined}>
         <PaginatedFlatList
@@ -62,9 +77,10 @@ const AnimeListScreen = () => {
           incrementBy={10}
           renderItem={({item}) => (
             <AnimeCard
-              {...item.attributes}
-              id={item.id}
-              onAddFavorite={console.log}
+              anime={item}
+              isFavorite={favorite.animes.some(a => a.id === item.id)}
+              onAddFavorite={add}
+              onRemoveFavorite={remove}
               onPress={console.log}
             />
           )}
@@ -76,9 +92,10 @@ const AnimeListScreen = () => {
           ItemSeparatorComponent={ListSeparator}
           renderItem={({item}) => (
             <AnimeCard
-              {...item.attributes}
-              id={item.id}
-              onAddFavorite={console.log}
+              anime={item}
+              isFavorite={favorite.animes.some(a => a.id === item.id)}
+              onAddFavorite={add}
+              onRemoveFavorite={remove}
               onPress={console.log}
             />
           )}
