@@ -1,10 +1,8 @@
 import api from '../api/kitsu-api';
 import {Anime} from '../@types';
 
-export const getAnimeListAsync = async (
-  from: number | undefined = 0,
-): Promise<Anime[]> => {
-  const res = await api.get(`/anime?page[offset]=${from}`);
+export const getAnimeListAsync = async (page: number): Promise<Anime[]> => {
+  const res = await api.get(`/anime?page[offset]=${page}`);
 
   if (res.status >= 400) {
     return [];
