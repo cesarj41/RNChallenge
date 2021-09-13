@@ -2,10 +2,7 @@ import React from 'react';
 import {Anime} from '../@types';
 
 type ProviderState = {
-  animes: Anime[];
-};
-
-type ProviderActionState = {
+  favoriteAnimes: Anime[];
   add: (anime: Anime) => void;
   remove: (id: string) => void;
 };
@@ -14,68 +11,48 @@ const FavoriteAnimeContext = React.createContext<ProviderState | undefined>(
   undefined,
 );
 
-const FavoriteAnimeActionContext = React.createContext<
-  ProviderActionState | undefined
->(undefined);
-
-type State = Pick<ProviderState, 'animes'>;
+type State = Pick<ProviderState, 'favoriteAnimes'>;
 class FavoriteAnimeProvider extends React.Component<{}, State> {
   state = {
-    animes: [],
+    favoriteAnimes: [],
   };
 
   add = (anime: Anime) => {
-    this.setState(current => ({animes: [...current.animes, anime]}));
+    this.setState(current => ({
+      favoriteAnimes: [...current.favoriteAnimes, anime],
+    }));
   };
 
   remove = (id: string) => {
     this.setState(current => ({
-      animes: current.animes.filter(anime => anime.id !== id),
+      favoriteAnimes: current.favoriteAnimes.filter(anime => anime.id !== id),
     }));
   };
 
   render() {
     return (
-      <FavoriteAnimeActionContext.Provider
-        value={{add: this.add, remove: this.remove}}>
-        <FavoriteAnimeContext.Provider
-          value={{
-            animes: this.state.animes,
-          }}>
-          {this.props.children}
-        </FavoriteAnimeContext.Provider>
-      </FavoriteAnimeActionContext.Provider>
+      <FavoriteAnimeContext.Provider
+        value={{
+          favoriteAnimes: this.state.favoriteAnimes,
+          add: this.add,
+          remove: this.remove,
+        }}>
+        {this.props.children}
+      </FavoriteAnimeContext.Provider>
     );
   }
 }
 
-const useFavoriteAnime = () => {
+const useFavoriteAnimes = () => {
   const context = React.useContext(FavoriteAnimeContext);
-  const actionContext = React.useContext(FavoriteAnimeActionContext);
-
-  if (!context || !actionContext) {
-    throw new Error(
-      'useFavoriteAnime must be used within a FavoriteAnimeContext and FavoriteAnimeActionContext',
-    );
-  }
-
-  return {
-    animes: context.animes,
-    add: actionContext.add,
-    remove: actionContext.remove,
-  };
-};
-
-const useFavoriteAnimeActions = () => {
-  const context = React.useContext(FavoriteAnimeActionContext);
 
   if (!context) {
     throw new Error(
-      'useFavoriteAnimeActions must be used within a FavoriteAnimeContext and FavoriteAnimeActionContext',
+      'useFavoriteAnimes must be used within a FavoriteAnimeContext',
     );
   }
 
   return context;
 };
 
-export {FavoriteAnimeProvider, useFavoriteAnime, useFavoriteAnimeActions};
+export {FavoriteAnimeProvider, useFavoriteAnimes};

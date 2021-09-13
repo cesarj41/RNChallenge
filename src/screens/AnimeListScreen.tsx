@@ -1,21 +1,14 @@
 import React from 'react';
 import {Input, View, Button, Spinner} from 'native-base';
-import {
-  getAnimeListAsync,
-  searchAnimeAsync,
-} from '../../services/anime-service';
-import PaginatedFlatList from '../../components/PaginatedFlatList';
-import AnimeCard from './AnimeCard';
-import AnimeSearchList from './AnimeList';
-import {Anime} from '../../@types';
-import {
-  useFavoriteAnimeActions,
-  useFavoriteAnime,
-} from '../../providers/FavoriteAnimeProvider';
+import {getAnimeListAsync, searchAnimeAsync} from '../services/anime-service';
+import PaginatedFlatList from '../components/PaginatedFlatList';
+import AnimeCard from '../components/AnimeList/AnimeCard';
+import AnimeSearchList from '../components/AnimeList/AnimeList';
+import {Anime} from '../@types';
+import {useFavoriteAnimes} from '../providers/FavoriteAnimeProvider';
 
 const AnimeListScreen = () => {
-  const favorite = useFavoriteAnime();
-  const {add, remove} = useFavoriteAnimeActions();
+  const {favoriteAnimes, add, remove} = useFavoriteAnimes();
   const [searchStatus, setStatus] = React.useState<
     'clear' | 'searching' | 'search-completed'
   >();
@@ -78,7 +71,7 @@ const AnimeListScreen = () => {
           renderItem={({item}) => (
             <AnimeCard
               anime={item}
-              isFavorite={favorite.animes.some(a => a.id === item.id)}
+              isFavorite={favoriteAnimes.some(a => a.id === item.id)}
               onAddFavorite={add}
               onRemoveFavorite={remove}
               onPress={console.log}
@@ -93,7 +86,7 @@ const AnimeListScreen = () => {
           renderItem={({item}) => (
             <AnimeCard
               anime={item}
-              isFavorite={favorite.animes.some(a => a.id === item.id)}
+              isFavorite={favoriteAnimes.some(a => a.id === item.id)}
               onAddFavorite={add}
               onRemoveFavorite={remove}
               onPress={console.log}

@@ -48,13 +48,17 @@ const ProfileScreen = ({navigation: {navigate}}: Screens<'ProfileScreen'>) => (
         </Text>
       </Center>
     </ScrollView>
-    <View position="absolute" bottom={0} w="100%" pb={10}>
-      <Center>
-        <Button onPress={() => navigate('AnimeListScreen')}>
-          See anime app example
-        </Button>
-      </Center>
-    </View>
+    <Row position="absolute" bottom={0} w="100%" pb={10} justifyContent="space-around" px={5}>
+      <Button
+        flex={3}
+        mr={2}
+        colorScheme="amber"
+        _text={{color: 'white'}}
+        onPress={() => navigate('FavoriteAnimeListScreen')}>
+        Favorites
+      </Button>
+      <Button flex={3} onPress={() => navigate('AnimeListScreen')}>Animes</Button>
+    </Row>
   </Box>
 );
 

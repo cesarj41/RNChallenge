@@ -6,7 +6,7 @@ type Props = {
   anime: Anime;
   isFavorite?: boolean;
   onPress: (anime: Anime) => void;
-  onAddFavorite: (anime: Anime) => void;
+  onAddFavorite?: (anime: Anime) => void;
   onRemoveFavorite: (id: string) => void;
 };
 const AnimeCard = ({
@@ -42,7 +42,9 @@ const AnimeCard = ({
         </View>
         <View justifyContent="center">
           {!isFavorite && (
-            <Button size="xs" onPress={() => onAddFavorite(anime)}>
+            <Button
+              size="xs"
+              onPress={() => onAddFavorite && onAddFavorite(anime)}>
               <Text color="white" fontSize="xs">
                 Agregar
               </Text>
