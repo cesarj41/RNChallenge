@@ -48,7 +48,13 @@ const ProfileScreen = ({navigation: {navigate}}: Screens<'ProfileScreen'>) => (
         </Text>
       </Center>
     </ScrollView>
-    <Row position="absolute" bottom={0} w="100%" pb={10} justifyContent="space-around" px={5}>
+    <Row
+      position="absolute"
+      bottom={0}
+      w="100%"
+      pb={10}
+      justifyContent="space-around"
+      px={5}>
       <Button
         flex={3}
         mr={2}
@@ -57,7 +63,9 @@ const ProfileScreen = ({navigation: {navigate}}: Screens<'ProfileScreen'>) => (
         onPress={() => navigate('FavoriteAnimeListScreen')}>
         Favorites
       </Button>
-      <Button flex={3} onPress={() => navigate('AnimeListScreen')}>Animes</Button>
+      <Button flex={3} onPress={() => navigate('AnimeListScreen')}>
+        Animes
+      </Button>
     </Row>
   </Box>
 );

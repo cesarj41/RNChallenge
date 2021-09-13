@@ -31,7 +31,7 @@ const AnimeListScreen = () => {
     setStatus('search-completed');
   };
   return (
-    <View p={4}>
+    <View p={4} flex={1}>
       <Input
         value={search}
         onChangeText={handleTextChange}
