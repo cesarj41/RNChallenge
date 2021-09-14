@@ -6,14 +6,16 @@ import AnimeCard from './AnimeCard';
 import {getAnimeListAsync} from '../../services/anime-service';
 import {useFavoriteAnimes} from '../../providers/FavoriteAnimeProvider';
 import {useNavigation} from '@react-navigation/core';
+import {FlatList} from 'react-native';
 
 type Props = {
+  animes?: Anime[];
   filter?: string;
 };
 
 let refresh: () => void;
 
-const AnimeList = ({filter}: Props) => {
+const AnimeList = ({filter, animes}: Props) => {
   const [mounted, setMounted] = useState(false);
   const {favoriteAnimes, add, remove} = useFavoriteAnimes();
   const {navigate} = useNavigation();
@@ -38,6 +40,23 @@ const AnimeList = ({filter}: Props) => {
 
     refresh();
   }, [filter]);
+
+  if (animes) {
+    return (
+      <FlatList<Anime>
+        data={animes}
+        ItemSeparatorComponent={ListSeparator}
+        renderItem={({item}) => (
+          <AnimeCard
+            anime={item}
+            isFavorite
+            onRemoveFavorite={remove}
+            onPress={handleNavigationToDetails}
+          />
+        )}
+      />
+    );
+  }
   return (
     <PaginatedFlatList
       attachRefresh={func => {
