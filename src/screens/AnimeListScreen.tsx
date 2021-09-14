@@ -6,8 +6,11 @@ import AnimeCard from '../components/AnimeList/AnimeCard';
 import AnimeSearchList from '../components/AnimeList/AnimeList';
 import {Anime} from '../@types';
 import {useFavoriteAnimes} from '../providers/FavoriteAnimeProvider';
+import {Screens} from '../@types';
 
-const AnimeListScreen = () => {
+type Props = Screens<'AnimeListScreen'>;
+
+const AnimeListScreen = ({navigation: {navigate}}: Props) => {
   const {favoriteAnimes, add, remove} = useFavoriteAnimes();
   const [searchStatus, setStatus] = React.useState<
     'clear' | 'searching' | 'search-completed'
@@ -29,6 +32,9 @@ const AnimeListScreen = () => {
     const animesFound = await searchAnimeAsync(search);
     setAnimes(animesFound);
     setStatus('search-completed');
+  };
+  const handleNavigationToDetails = (anime: Anime) => {
+    navigate('AnimeDetailScreen', {anime});
   };
   return (
     <View p={4} flex={1}>
@@ -74,7 +80,7 @@ const AnimeListScreen = () => {
               isFavorite={favoriteAnimes.some(a => a.id === item.id)}
               onAddFavorite={add}
               onRemoveFavorite={remove}
-              onPress={console.log}
+              onPress={handleNavigationToDetails}
             />
           )}
         />
@@ -89,7 +95,7 @@ const AnimeListScreen = () => {
               isFavorite={favoriteAnimes.some(a => a.id === item.id)}
               onAddFavorite={add}
               onRemoveFavorite={remove}
-              onPress={console.log}
+              onPress={handleNavigationToDetails}
             />
           )}
         />

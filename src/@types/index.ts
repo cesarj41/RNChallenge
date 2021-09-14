@@ -35,7 +35,7 @@ interface Attributes {
   status: string;
   tba: null;
   posterImage: PosterImage;
-  coverImage: CoverImage;
+  coverImage?: CoverImage;
   episodeCount: number;
   episodeLength: number;
   totalLength: number;
