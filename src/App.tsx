@@ -1,6 +1,5 @@
 import React from 'react';
 import {NativeBaseProvider} from 'native-base';
-import QueryProvider from './providers/QueryProvider';
 import {SliderProvider} from './providers/SliderProvider';
 import {ScreenContainer} from './screens';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -10,13 +9,11 @@ const App = () => {
   return (
     <ErrorBoundary>
       <NativeBaseProvider>
-        <QueryProvider>
-          <SliderProvider>
-            <FavoriteAnimeProvider>
-              <ScreenContainer />
-            </FavoriteAnimeProvider>
-          </SliderProvider>
-        </QueryProvider>
+        <SliderProvider>
+          <FavoriteAnimeProvider>
+            <ScreenContainer />
+          </FavoriteAnimeProvider>
+        </SliderProvider>
       </NativeBaseProvider>
     </ErrorBoundary>
   );
