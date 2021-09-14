@@ -8,13 +8,16 @@ import {
   Text,
   View,
   Pressable,
+  Center,
+  Button,
 } from 'native-base';
-import {Screens} from '../../@types';
+import {Screens} from '../@types';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {redirectAsync} from '../../services/resource-service';
+import {redirectAsync} from '../services/resource-service';
 
 type Props = Screens<'AnimeDetailScreen'>;
 const AnimeDetailScreen = ({
+  navigation: {goBack},
   route: {
     params: {
       anime: {attributes},
@@ -71,6 +74,11 @@ const AnimeDetailScreen = ({
             <Heading color="teal.600">{attributes.popularityRank}</Heading>
           </View>
         </Row>
+        <Center mt={10}>
+          <Button px={10} colorScheme="dark" onPress={() => goBack()}>
+            Back
+          </Button>
+        </Center>
         <View h={20} />
       </ScrollView>
     </SafeAreaView>

@@ -4,7 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ProfileScreen from './ProfileScreen';
 import AnimeListScreen from './AnimeListScreen';
 import FavoriteAnimeListScreen from './FavoriteAnimeListScreen';
-import AnimeDetailScreen from './AnimeDetailScreen/AnimeDetailScreen';
+import AnimeDetailScreen from './AnimeDetailScreen';
 import {Anime} from '../@types';
 
 export type Routes = {
