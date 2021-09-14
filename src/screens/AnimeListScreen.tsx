@@ -20,7 +20,6 @@ const AnimeListScreen = () => {
           py={0}
           value={search}
           onChangeText={handleChangeText}
-          onSubmitEditing={() => console.log('presione eso')}
           bgColor="white"
           variant="unstyled"
           _light={{
