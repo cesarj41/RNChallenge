@@ -11,6 +11,7 @@ type Status =
   | 'fetching_more_error'
   | 'retry';
 export type Props<T> = {
+  attachRefresh?: (refresh: () => void) => void;
   getData: (page: number) => Promise<T[]>;
   incrementBy: number;
   LoadingComponent?: FlatListProps<T>['ListEmptyComponent'];
@@ -43,6 +44,9 @@ export default class PaginatedFlatList<T = any> extends React.Component<
 
   constructor(props: Props<T>) {
     super(props);
+    if (props.attachRefresh) {
+      props.attachRefresh(this.handleRefresh);
+    }
   }
 
   handleLoadMore = () => {

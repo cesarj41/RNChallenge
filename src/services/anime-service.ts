@@ -1,18 +1,16 @@
 import api from '../api/kitsu-api';
 import {Anime} from '../@types';
 
-export const getAnimeListAsync = async (page: number): Promise<Anime[]> => {
-  const res = await api.get(`/anime?page[offset]=${page}`);
+export const getAnimeListAsync = async (
+  page: number,
+  filterBy?: string,
+): Promise<Anime[]> => {
+  let search = `/anime?page[offset]=${page}`;
 
-  if (res.status >= 400) {
-    return [];
+  if (filterBy) {
+    search += `&filter[text]=${filterBy}`;
   }
-
-  return res.data.data;
-};
-
-export const searchAnimeAsync = async (criteria: string): Promise<Anime[]> => {
-  const res = await api.get(`/anime?filter[text]=${criteria}`);
+  const res = await api.get(search);
 
   if (res.status >= 400) {
     return [];
