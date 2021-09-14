@@ -38,36 +38,39 @@ const AnimeListScreen = ({navigation: {navigate}}: Props) => {
   };
   return (
     <View p={4} flex={1}>
-      <Input
-        value={search}
-        onChangeText={handleTextChange}
-        onSubmitEditing={() => console.log('presione eso')}
-        bgColor="white"
-        variant="rounded"
-        _light={{
-          placeholderTextColor: 'blueGray.400',
-        }}
-        _dark={{
-          placeholderTextColor: 'blueGray.50',
-        }}
-        InputLeftElement={
-          <Button
-            colorScheme="secondary"
-            _text={{fontSize: 'xs'}}
-            onPress={handleSearch}>
-            Search
-          </Button>
-        }
-        InputRightElement={
-          searchStatus === 'searching' ? (
-            <Spinner
-              size="sm"
-              color="gray.900"
-              accessibilityLabel="Searching animes"
-            />
-          ) : undefined
-        }
-      />
+      <View bgColor="white" borderRadius={8}>
+        <Input
+          py={0}
+          value={search}
+          onChangeText={handleTextChange}
+          onSubmitEditing={() => console.log('presione eso')}
+          bgColor="white"
+          variant="unstyled"
+          _light={{
+            placeholderTextColor: 'blueGray.400',
+          }}
+          _dark={{
+            placeholderTextColor: 'blueGray.50',
+          }}
+          InputLeftElement={
+            <Button
+              colorScheme="secondary"
+              _text={{fontSize: 'xs'}}
+              onPress={handleSearch}>
+              Search
+            </Button>
+          }
+          InputRightElement={
+            searchStatus === 'searching' ? (
+              <Spinner
+                size="sm"
+                color="gray.900"
+                accessibilityLabel="Searching animes"
+              />
+            ) : undefined
+          }
+        />
+      </View>
       <View display={searchStatus === 'search-completed' ? 'none' : undefined}>
         <PaginatedFlatList
           getData={getAnimeListAsync}
